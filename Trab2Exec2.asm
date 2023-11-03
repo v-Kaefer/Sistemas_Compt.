@@ -26,13 +26,11 @@ loop_j:
     st [r0 + r4], r6          ; vec[j] = vec[j-1]
     sub r4, r4, 1             ; j--
     bnz r4, loop_j            ; Loop de j
-
 fim_j:
     st [r0 + r4], r3          ; vec[j] = aux
 
     add r2, r2, 1             ; i++
     bnz r2, loop_i            ; Loop de i
-
 fim_i:
     ret                       ; Retorna da função
 
@@ -68,9 +66,44 @@ main
     ldi r3, 0               ; pointer: dentro do array
 	ldi lr, loop_vet
 
+
+
+
+insertion_sort:
+    ldi x, 1                 ; Inicializa i = 1
+loop_i:
+    ;vet_size
+    blt x, vet_size, fim_i         ; Se i >= size, termina loop
+
+    ldi y, [i + x]          ; aux = vec[i]
+    ldi j, x                ; j = i
+    bnz sp, loop_j
+loop_j:
+    ;loop_sort
+    ldi z, 0                 ; Se j <= 0, termina loop
+    ble j, z, fim_j
+
+    ldi r6, [i + j - 1]      ; vec[j-1]
+    blt y, r6, fim_j         ; Se vec[j-1] <= aux, termina loop
+
+    st [i + j], r6          ; vec[j] = vec[j-1]
+    sub j, j, 1             ; j--
+    bnz j, loop_j            ; Loop de j
+fim_j:
+    st [r0 + r4], r3          ; vec[j] = aux
+
+    add r2, r2, 1             ; i++
+    bnz r2, loop_i            ; Loop de i
+fim_i:
+    ret                       ; Retorna da função
+
+
+
+
 loop_vet
     ; loop para próx vetores
     ldb r2, r0
+
     
 vet_size
     ; verifica o tamanho do vetor
@@ -107,6 +140,11 @@ loop_sort
     ; loop para organizar em ordem crescente
     bez r4, r2, loop_vet    ; se r2 = r4, próximo vetor
 
+
+
+
+
+
 print
     ; loop para imprimir vetores antes e depois
 
@@ -131,6 +169,7 @@ printint 0xf002
 5° - Printar os vetores
 6° - Próximo array
 
+#######
 
 
 
@@ -142,8 +181,7 @@ printint 0xf002
 
 
 
-
-
+#EXEMPLO
 ; o programa calcula os 10 primeiros multiplos de 3 e os coloca em um vetor
 ;
 ;	i = 0; j = 0;
