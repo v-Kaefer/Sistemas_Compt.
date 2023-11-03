@@ -55,6 +55,135 @@ endereco_vetor1: .word valores_vetor1
 tamanho_vetor1:  .word 5
 valores_vetor1:  .word 5, 1, 3, 4, 2
 
+words
+	sub sp, 2			; Pilha(push)
+	stw r0, sp			; push(r0)
+	ldi r0, r5			; temporariamente preservar r5 (próx. string)
+	sub sp, 2			; Pilha(push)
+	stw r0, sp			; push2(r5)
+	ldi r0, r5
+	
+    sub r0, r5, 1       ; r0 = r5-1
+    bez 0, r0, set_str1 ; if (r0 == 0) PC = set_str1
+	sub 0, r5, 2
+    bez 0, r0, set_str2 ; if (r0 == 0) PC = set_str2
+    sub 0, r5, 3
+    bez 0, r0, set_str3 ; if (r0 == 0) PC = set_str3
+
+    bez 4, r0, result	; começa display da resposta
+
+    bnz r7, lr
+
+
+
+
+
+
+main
+    ldi r0, loop_vet        ; endereço temporário das strings
+	ldi r1, 0               ; r1 = 0
+    ldi r3, 0               ; pointer: dentro do array
+	ldi lr, loop_sort
+
+loop_vet
+    ; loop para próx vetores
+    ldb r2, r0
+    
+
+
+
+
+loop_string
+    ldb r2, r0              ; carrega caractere atual no r2
+    bez r1, r2, end_string  ; se r2 = r1 ('\0'), registra fim da string OK
+    bez r4, r2, inside_word ; se r2 = (' '), vai p/ inside_word
+
+	;xor  
+
+    ; É um espaço, mas estava dentro de uma palavra anteriormente //ERRO AQUI
+    bnz r3, increment_word
+
+    ; Não é fim de string, espaço e não estava dentro de uma palavra, então segue OK
+    add r0, 1
+    bnz r7, lr     ; pulo incondicional
+
+
+
+
+
+loop_sort
+    ; loop para organizar em ordem crescente
+
+print
+    ; loop para imprimir vetores antes e depois
+
+
+
+
+vet1 10 5 3 8 1
+vet2 9 6 5 1
+vet3 9 10 2
+
+printchar 0xf000
+printint 0xf002
+
+######
+
+
+1° - Definir os vetores
+2° - Printar os vetores
+3° - Executar o Insertion Sort
+4° - Organizar os vetores
+5° - Printar os vetores
+6° - Próximo array
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; o programa calcula os 10 primeiros multiplos de 3 e os coloca em um vetor
+;
+;	i = 0; j = 0;
+;	while (i < 10){
+;		j = j + 3;
+;		v[i] = j;
+;		i++;
+;	}
+;
+
+main
+	ldi r1,0			; r1 = 0 (i)
+	ldi r2,0			; r2 = 0 (j)
+	ldw r3,max			; r3 = 10
+repete
+	slt r4,r1,r3		; se i < max, r4 = true, senao r4 = false
+	bez r4,fim			; se r4 == false, vai para fim
+	
+	add r2,3			; j = j + 3
+	
+	ldi r5,v			; r5 = &v[0]
+	add r5,r5,r1		; r5 = &v[0] + i
+	add r5,r5,r1		; r5 = &v[0] + i * 2 	(&v[i])
+	stw r2,r5			; v[i] = j 				(*r5 = r2)
+	
+	add r1,1			; i++
+	
+	bnz r7,repete		; vai para repete
+fim
+	hcf					; PARA!
+
+max	10
+v	0 0 0 0 0 0 0 0 0 0
+
 
 
 
@@ -83,7 +212,8 @@ insertion_sort(int * vec, int size) {
 }
 
 A função insertion_sort é um algoritmo de ordenação que tem como finalidade classificar um array (ou vetor) de inteiros em ordem crescente.
-Ele segue uma abordagem de "inserção", onde ele insere cada elemento do array na posição correta, garantindo que os elementos anteriores estejam sempre ordenados.
+Ele segue uma abordagem de "inserção", onde ele insere cada elemento do array na posição correta,
+ garantindo que os elementos anteriores estejam sempre ordenados.
 É um algoritmo eficiente para pequenas quantidades de dados ou arrays quase classificados.
 
 Aqui está uma breve descrição do que a função faz:
