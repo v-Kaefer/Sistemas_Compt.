@@ -78,8 +78,8 @@ set_str3
 zera_pilha
 	ldw r5, sp			; pop(r5)
 	add sp, 2			; Pilha(pop)
-	ldw at, sp
-	add sp, 2
+	ldw at, sp          ; pop(r0)
+	add sp, 2           ; Pilha(pop)
 	bnz r7, lr
 
 result
