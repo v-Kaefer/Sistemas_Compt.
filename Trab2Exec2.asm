@@ -62,7 +62,7 @@ valores_vetor1:  .word 5, 1, 3, 4, 2
 
 main
     ldi r0, set_vet         ; endereço temporário das strings
-	ldi r1, 0               ; r1 = 0
+	ldi r1, vet_control     ; r1 = 0
     ldi r3, 0               ; pointer: dentro do array
 	ldi lr, loop_vet
 
@@ -75,20 +75,20 @@ loop_i:
     ;vet_size
     blt x, vet_size, fim_i         ; Se i >= size, termina loop
 
-    ldi y, [i + x]          ; aux = vec[i]
-    ldi j, x                ; j = i
+    ldi y, [r2 + x]          ; aux = vec[i]
+    ldi r0, x                ; j = i
     bnz sp, loop_j
 loop_j:
     ;loop_sort
     ldi z, 0                 ; Se j <= 0, termina loop
-    ble j, z, fim_j
+    ble r0, z, fim_j
 
-    ldi r6, [i + j - 1]      ; vec[j-1]
+    ldi r6, [r2 + r0 - 1]      ; vec[j-1]
     blt y, r6, fim_j         ; Se vec[j-1] <= aux, termina loop
 
-    st [i + j], r6          ; vec[j] = vec[j-1]
-    sub j, j, 1             ; j--
-    bnz j, loop_j            ; Loop de j
+    st [r2 + r0], r6          ; vec[j] = vec[j-1]
+    sub r0, r0, 1             ; j--
+    bnz r0, loop_j            ; Loop de j
 fim_j:
     st [r0 + r4], r3          ; vec[j] = aux
 
@@ -122,13 +122,13 @@ set_vet
     add r1, r1, 1       ; vetores
 
     sub r0, r1, 1       ; r0 = r1-1
-    bez 1, r1, vet1     ; if (r1 == 0) PC = vet1
+    bez r1, vet1     ; if (r1 == 0) PC = vet1
 
     sub r0, r1, 2       ; r0 = r1-2
-    bez 2, r1, vet2     ; if (r1 == 0) PC = vet2
+    bez r1, vet2     ; if (r1 == 0) PC = vet2
 
     sub r0, r1, 3       ; r0 = r1-3
-    bez 3, r1, vet3     ; if (r1 == 0) PC = vet3
+    bez r1, vet3     ; if (r1 == 0) PC = vet3
 
 
     //bez 4, r0, result	; começa display da resposta
@@ -147,6 +147,22 @@ loop_sort
 
 print
     ; loop para imprimir vetores antes e depois
+    sub sp, 2           ;push
+    stw r6, sp
+    ldb r6, r2          ; r6 = r2
+    
+    sub sp, 2
+    stw r2, sp
+
+    
+    stw r6, printint
+    add r2, 1
+    ble r2, r1, print   ; Loop do print
+
+    ldw r6, sp          ;pop
+    add sp, 2
+
+    bnz sp, lr
 
 
 
