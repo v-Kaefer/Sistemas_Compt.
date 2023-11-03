@@ -55,7 +55,35 @@ endereco_vetor1: .word valores_vetor1
 tamanho_vetor1:  .word 5
 valores_vetor1:  .word 5, 1, 3, 4, 2
 
-words
+
+
+
+
+
+
+
+main
+    ldi r0, set_vet         ; endereço temporário das strings
+	ldi r1, 0               ; r1 = 0
+    ldi r3, 0               ; pointer: dentro do array
+    ldi r4, 48              ; ASCII (48) = '\0'
+	ldi lr, loop_vet
+
+loop_vet
+    ; loop para próx vetores
+    ldb r2, r0
+    
+vet_size
+    ; verifica o tamanho do vetor
+    Pilha
+    Pilha
+    
+    slt x, x, x             ; se x2 < x3, x1 = 1 else x1 = 0
+    bez 1, x1, loop_sort    ; desvio condicional (próx. vet)
+    bnz sp, lr              ; volta incondicional  
+
+
+set_vet
 	sub sp, 2			; Pilha(push)
 	stw r0, sp			; push(r0)
 	ldi r0, r5			; temporariamente preservar r5 (próx. string)
@@ -64,55 +92,21 @@ words
 	ldi r0, r5
 	
     sub r0, r5, 1       ; r0 = r5-1
-    bez 0, r0, set_str1 ; if (r0 == 0) PC = set_str1
+
+    bez 0, r0, vet1 ; if (r0 == 0) PC = vet1
 	sub 0, r5, 2
-    bez 0, r0, set_str2 ; if (r0 == 0) PC = set_str2
+    bez 0, r0, vet2 ; if (r0 == 0) PC = vet2
     sub 0, r5, 3
-    bez 0, r0, set_str3 ; if (r0 == 0) PC = set_str3
+    bez 0, r0, vet3 ; if (r0 == 0) PC = vet3
 
     bez 4, r0, result	; começa display da resposta
 
     bnz r7, lr
 
 
-
-
-
-
-main
-    ldi r0, loop_vet        ; endereço temporário das strings
-	ldi r1, 0               ; r1 = 0
-    ldi r3, 0               ; pointer: dentro do array
-	ldi lr, loop_sort
-
-loop_vet
-    ; loop para próx vetores
-    ldb r2, r0
-    
-
-
-
-
-loop_string
-    ldb r2, r0              ; carrega caractere atual no r2
-    bez r1, r2, end_string  ; se r2 = r1 ('\0'), registra fim da string OK
-    bez r4, r2, inside_word ; se r2 = (' '), vai p/ inside_word
-
-	;xor  
-
-    ; É um espaço, mas estava dentro de uma palavra anteriormente //ERRO AQUI
-    bnz r3, increment_word
-
-    ; Não é fim de string, espaço e não estava dentro de uma palavra, então segue OK
-    add r0, 1
-    bnz r7, lr     ; pulo incondicional
-
-
-
-
-
 loop_sort
     ; loop para organizar em ordem crescente
+    bez r4, r2, loop_vet    ; se r2 = r4, próximo vetor
 
 print
     ; loop para imprimir vetores antes e depois
