@@ -66,7 +66,6 @@ main
     ldi r0, set_vet         ; endereço temporário das strings
 	ldi r1, 0               ; r1 = 0
     ldi r3, 0               ; pointer: dentro do array
-    ldi r4, 48              ; ASCII (48) = '\0'
 	ldi lr, loop_vet
 
 loop_vet
@@ -84,22 +83,22 @@ vet_size
 
 
 set_vet
-	sub sp, 2			; Pilha(push)
+    sub sp, 2			; Pilha(push)
 	stw r0, sp			; push(r0)
-	ldi r0, r5			; temporariamente preservar r5 (próx. string)
-	sub sp, 2			; Pilha(push)
-	stw r0, sp			; push2(r5)
-	ldi r0, r5
-	
-    sub r0, r5, 1       ; r0 = r5-1
 
-    bez 0, r0, vet1 ; if (r0 == 0) PC = vet1
-	sub 0, r5, 2
-    bez 0, r0, vet2 ; if (r0 == 0) PC = vet2
-    sub 0, r5, 3
-    bez 0, r0, vet3 ; if (r0 == 0) PC = vet3
+    add r1, r1, 1       ; vetores
 
-    bez 4, r0, result	; começa display da resposta
+    sub r0, r1, 1       ; r0 = r1-1
+    bez 1, r1, vet1     ; if (r1 == 0) PC = vet1
+
+    sub r0, r1, 2       ; r0 = r1-2
+    bez 2, r1, vet2     ; if (r1 == 0) PC = vet2
+
+    sub r0, r1, 3       ; r0 = r1-3
+    bez 3, r1, vet3     ; if (r1 == 0) PC = vet3
+
+
+    //bez 4, r0, result	; começa display da resposta
 
     bnz r7, lr
 
@@ -114,10 +113,11 @@ print
 
 
 
+
 vet1 10 5 3 8 1
 vet2 9 6 5 1
 vet3 9 10 2
-
+vet_control 5
 printchar 0xf000
 printint 0xf002
 
