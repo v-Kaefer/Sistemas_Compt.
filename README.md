@@ -4,14 +4,14 @@ Trabalhos da cadeira de Fundamentos de Sistemas Computacionais
 Cheatsheet:
 
 Reg | Nome | Apelido| Papel
-0   | r0   | at     | Especial
+0   | r0   | at     | Especial  [r0 = Temp(montador) = at] => Não preservado!
 1   | r1   | r1     | Uso geral
 2   | r2   | r2     | Uso geral
 3   | r3   | r3     | Uso geral
 4   | r4   | r4     | Uso geral
-5   | r5   | sr     | Uso geral
-6   | r6   | lr     | Uso geral
-7   | r7   | sp     | Especial
+5   | r5   | sr     | Uso geral [r5 = Temp(sr)] => Não preservado!
+6   | r6   | lr     | Uso geral [r6 = PC = address de retorno] => "Chamador"
+7   | r7   | sp     | Especial  [Ponteiro de Pilha = sp] => Preservado
 
 Instrução | Descrição | Opcode
 AND | Logical product | 0 0 0 0
@@ -38,8 +38,8 @@ BNZ | Branch if not equal zero |1 1 0 1
 
 Operação     | Significado
 add r3,r1,r2 | r3 = r1 + r2
-ldb r3,r0,r2 | r3 = MEM[r2] ***
-stw r0,r1,r2 | MEM[r2] = r1 ***
+ldb r3,r0,r2 | r3 = MEM[r2]
+stw r0,r1,r2 | MEM[r2] = r1
 and r2,r3,r4 | r2 = r3 and r4
 bez r0,r2,r3 | if (r2 == zero) PC = r3
 slt r3,r1,r2 | if (r1 < r2) r3 = 1, else r3 = 0
