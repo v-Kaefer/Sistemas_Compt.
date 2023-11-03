@@ -8,19 +8,16 @@ main
 loop_string
     ldb r2, r0              ; carrega caractere atual no r2
     bez r1, r2, end_string  ; se r2 = r1 ('\0'), registra fim da string OK
-    bez r4, r2, inside_word ; se r2 = (' '), vai p/ inside_word /////Possivelmente errado
+    bez r4, r2, inside_word ; se r2 = (' '), vai p/ inside_word
 
-	;BRANCH IF EQUAL:
-	;sub r2, r2, r4
-	;bez r0, r1, inside_word
+	;xor  
 
-
-    ; É um espaço, mas estava dentro de uma palavra anteriormente
+    ; É um espaço, mas estava dentro de uma palavra anteriormente //ERRO AQUI
     bnz r3, increment_word
 
-    ; Não é espaço e não estava dentro de uma palavra, então segue
+    ; Não é fim de string, espaço e não estava dentro de uma palavra, então segue OK
     add r0, 1
-    bnz r7, loop_string     ; pulo incondicional
+    bnz r7, lr     ; pulo incondicional
 
 
 end_string
@@ -39,7 +36,7 @@ inside_word
 	sub sp, 2
 	stw r0, sp				; push(r0)    
     
-	;increment_word
+increment_word
 	sub sp, 2
 	stw r3, 2
 
