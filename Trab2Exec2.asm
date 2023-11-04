@@ -49,9 +49,9 @@ loop_i
     ldb r2, r0
     ldb r3, r2          ; aux = vet[i]
     ; Se i > vet_size, termina loop
-	slt sr, r1, vet_control; if (r1(i/j)<vet_size) {sr=1} else {sr=0}
+	slt sr, r1, vet_control; if (r1(i/j)<vet_control) {sr=1} else {sr=0}
     bez sr, fim_i       ; sr = 0    
-    bnz sp, loop_j
+    bnz sp, loop_j      ; sr = 1
 fim_i
 	; ?
     add r1, r1, 1       ; r1++
@@ -61,7 +61,7 @@ loop_j
     ; while ((j > 0) && (vet[j - 1] > aux)) {
     ; (j > 0) 
     slt sr, r1, 0       ; if (r1(j) < 0) {sr=1} else {sr=0}
-    bnz sr, fim_j       ; if (sr(j) < 0) {loopend}
+    bez sr, fim_j       ; if (sr(j) < 0) {loopend}
 
     ; ajuste p/ teste (vet[j - 1] > aux)
     ldi sr, r1          ; sr = r1 (j)
