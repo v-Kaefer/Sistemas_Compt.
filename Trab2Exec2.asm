@@ -8,7 +8,6 @@ inicio:
 
     ; Vetor 2 e 3 - Seriam repetições semelhantes ao que foi feito para o vetor 1
     ; Finaliza programa
-
 insertion_sort:
     ldi r2, 1                 ; Inicializa i = 1
 loop_i:
@@ -60,13 +59,15 @@ valores_vetor1:  .word 5, 1, 3, 4, 2
 
 
 
+
+
+
+
 main
     ldi r0, set_vet         ; endereço temporário das strings
 	ldi r1, vet_control     ; r1 = 0
     ldi r3, 0               ; pointer: dentro do array
 	ldi lr, loop_vet
-
-
 
 
 insertion_sort:
@@ -197,7 +198,7 @@ printint 0xf002
 
 
 
-#EXEMPLO
+##EXEMPLO
 ; o programa calcula os 10 primeiros multiplos de 3 e os coloca em um vetor
 ;
 ;	i = 0; j = 0;
@@ -235,12 +236,45 @@ v	0 0 0 0 0 0 0 0 0 0
 
 
 
+##  VERIFICAR SE UM NÚMERO É MAIOR QUE O OUTRO, DENTRO DE UM VETOR
+
+;	i = 0; maior = -32768;
+;	while (i < max) {
+;		if (v[i] > maior)
+;			maior = v[i];
+;		i++;
+;	}
+
+main
+	ldi r1,0
+	ldw r2,maior
+	ldw r3,max
+repete
+	slt r4,r1,r3
+	bez r4,fim
+	
+	ldi r5,v
+	add r5,r5,r1
+	add r5,r5,r1
+	ldw r5,r5
+	
+	slt r4,r5,r2
+	bnz r4,pula
+	and r2,r5,r5
+pula
+	add r1,1
+	bnz r7,repete
+fim
+	stw r2,maior
+	stw r2,0xf002
+	hcf
+
+max	10
+v	653 -12415 254 3 338 -35 5335 32 -990 735
+maior	-32768
 
 
-
-
-
-
+##
 Problema 2: A função abaixo implementa o algoritmo Insertion Sort.
  Escreva um programa que implementa esse algoritmo e demonstre seu funcionamento
  com 3 vetores de tamanho diferente. Para cada um dos vetores,
@@ -259,6 +293,39 @@ insertion_sort(int * vec, int size) {
     }
 }
 
+
+i e j = mantem igual e armazena na pilha como 1 variável
+
+main
+    ; int i, j, aux
+    ldi r0, vets    ; vetores
+    ldi r1, 1       ; i & j
+    ldi r3, 0       ; aux
+
+loop_i
+    
+    ; Se i > vet_size, termina loop
+	slt r5, r1, vet_size    ; if (r1<vet_size) {r5=1} else {r5=0}
+	bez r5, fim_i       ; desvio condicional (r5)
+
+
+fim_i
+	; ?
+    add r1, r1, 1       ; r1++
+    bnz sp, lr
+
+
+
+
+
+vet_size 1
+
+
+
+
+
+
+
 A função insertion_sort é um algoritmo de ordenação que tem como finalidade classificar um array (ou vetor) de inteiros em ordem crescente.
 Ele segue uma abordagem de "inserção", onde ele insere cada elemento do array na posição correta,
  garantindo que os elementos anteriores estejam sempre ordenados.
@@ -267,6 +334,9 @@ Ele segue uma abordagem de "inserção", onde ele insere cada elemento do array 
 Aqui está uma breve descrição do que a função faz:
 
 1° Ela recebe um array de inteiros vec e o tamanho desse array size como argumentos.
+
+
+
 
 2° Um loop for começa a partir do segundo elemento do array (índice 1) e percorre até o último elemento (índice size - 1).
 
