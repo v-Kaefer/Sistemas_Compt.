@@ -39,7 +39,8 @@ loop_i
     ldb r2, r0
     ldb r3, r2          ; aux = vet[i]
     ; Se i > vet_size, termina loop
-	slt sr, r1, vet_size; if (r1(i/j)<vet_size) {sr=1} else {sr=0}
+    ldi sr, r1
+	slt sr, vet_size; if (r1(i/j)<vet_size) {sr=1} else {sr=0}
     bez sr, fim_i       ; sr = 0    
     bnz sp, loop_j
 fim_i
@@ -84,7 +85,6 @@ endloop_j
     stb r2, r3          ; vet[j] = aux
     bnz sp, loop_i
 
-
 vets
     add next_vet, 1
     slt sr, next_vet, 3
@@ -100,13 +100,8 @@ set_vet2
     ldi r0, vet2
 set_vet1
     ldi r0, vet1
-
-
-
 end
     hcf
-
-
 
 
 vet_size 1
