@@ -115,17 +115,4 @@ vet1 10 5 3 8 1
 vet2 9 6 5 1
 vet3 9 10 2
 vet_control 5
-printchar 0xf000
 printint 0xf002
-
-######
-
-
-1° - Definir os vetores
-2° - Printar os vetores
-3° - Executar o Insertion Sort
-4° - Organizar os vetores
-5° - Printar os vetores
-6° - Próximo array
-
-#######
