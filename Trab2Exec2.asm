@@ -35,12 +35,21 @@ main
     ldi r1, 1       ; i & j
     ldi r3, 0       ; aux
 
+begin
+    ldb r2, r0
+    stw r2, printint
+    
+    ldi sr, r1
+    slt sr, vet_control
+    add r0, 1
+    bnz sr, begin
+
+
 loop_i
     ldb r2, r0
     ldb r3, r2          ; aux = vet[i]
     ; Se i > vet_size, termina loop
-    ldi sr, r1
-	slt sr, vet_size; if (r1(i/j)<vet_size) {sr=1} else {sr=0}
+	slt sr, r1, vet_control; if (r1(i/j)<vet_size) {sr=1} else {sr=0}
     bez sr, fim_i       ; sr = 0    
     bnz sp, loop_j
 fim_i
@@ -96,10 +105,13 @@ vets
 
 set_vet3
     ldi r0, vet3
+    bnz sp, begin
 set_vet2
     ldi r0, vet2
+    bnz sp, begin
 set_vet1
     ldi r0, vet1
+    bnz sp, begin
 end
     hcf
 
