@@ -1,49 +1,52 @@
 # Sistemas_Compt.
 Trabalhos da cadeira de Fundamentos de Sistemas Computacionais
 
-Cheatsheet:
 
-Reg | Nome | Apelido| Papel
-0   | r0   | at     | Especial  [r0 = Temp(montador) = at] => Não preservado!
-1   | r1   | r1     | Uso geral
-2   | r2   | r2     | Uso geral
-3   | r3   | r3     | Uso geral
-4   | r4   | r4     | Uso geral
-5   | r5   | sr     | Uso geral [r5 = Temp(sr)] => Não preservado!
-6   | r6   | lr     | Uso geral [r6 = PC = address de retorno] => "Chamador"
-7   | r7   | sp     | Especial  [Ponteiro de Pilha = sp] => Preservado
+Problema 2: A função abaixo implementa o algoritmo Insertion Sort.
+ Escreva um programa que implementa esse algoritmo e demonstre seu funcionamento  com 3 vetores de tamanho diferente. Para cada um dos vetores,
+ apresente no terminal seus elementos antes e depois da ordenação.
 
-Instrução | Descrição | Opcode
-AND | Logical product | 0 0 0 0
-OR  | Logical sum     | 0 0 0 1 
-XOR | Logical diff    | 0 0 1 0 
-SLT | Set if less than| 0 0 1 1 
-SLTU| SLT (unsigned)  | 0 1 0 0 
-ADD | Add             | 0 1 0 1 
-ADC | Add with carry  | 0 1 0 1 
-SUB | Subtract        | 0 1 1 0 
-SBC | SUB with carry  | 0 1 1 0 
-LDR | Load register   | 1 0 0 0 
-LDC | Load constant   | 1 0 0 1 
-LSR | Logical shift right        | 1 0 1 0 
-ASR | Arithmetic shift right     | 1 0 1 0 
-ROR | Rotate right through carry | 1 0 1 0 
-LDB | Load byte       | 0 0 0 0 
-STB | Store byte      | 0 0 0 1 
-LDW | Load word       | 0 1 0 0 
-STW | Store word      | 0 1 0 1 
-BEZ | Branch if equal zero     | 1 1 0 0 
-BNZ | Branch if not equal zero |1 1 0 1 
+insertion_sort(int * vec, int size) {
+    int i, j, aux; main
+    for (i = 1; i < size; i++) { loop_i
+        aux = vec[i]    ; aux = vetor [1(2)] => aux = 2
+        j = i           ; j = 1  
+        while ((j > 0) && (vec[j - 1] > aux)) { ; loop_j
+            vec[j] = vec[j - 1]; vetor [1(2)] = vetor[0(3)]
+            j--; j = 1 - 1
+            ;1° [3,2,1] -> [0,3,1] 
+            ; 
+        }
+        vec[j] = aux; [0,3,1] -> [2,3,1]
+    }
+}
 
 
-Operação     | Significado
-add r3,r1,r2 | r3 = r1 + r2
-ldb r3,r0,r2 | r3 = MEM[r2]
-stw r0,r1,r2 | MEM[r2] = r1
-and r2,r3,r4 | r2 = r3 and r4
-bez r0,r2,r3 | if (r2 == zero) PC = r3
-slt r3,r1,r2 | if (r1 < r2) r3 = 1, else r3 = 0
-lsr r5,r3,r0 | r5 = r3 >> 1
+
+Instrução | Descrição           | Opcode
+AND | Logical product           | 0 0 0 0
+OR  | Logical sum               | 0 0 0 1 
+XOR | Logical diff              | 0 0 1 0 
+SLT | Set if less than          | 0 0 1 1 
+SLTU| SLT (unsigned)            | 0 1 0 0 
+ADD | Add                       | 0 1 0 1 
+ADC | Add with carry            | 0 1 0 1 
+SUB | Subtract                  | 0 1 1 0 
+SBC | SUB with carry            | 0 1 1 0 
+LDR | Load register             | 1 0 0 0 
+LDC | Load constant             | 1 0 0 1 
+LSR | Logical shift right       | 1 0 1 0 
+ASR | Arithmetic shift right    | 1 0 1 0 
+ROR | Rotate right through carry| 1 0 1 0 
+LDB | Load byte                 | 0 0 0 0 
+STB | Store byte                | 0 0 0 1 
+LDW | Load word                 | 0 1 0 0 
+STW | Store word                | 0 1 0 1 
+BEZ | Branch if equal zero      | 1 1 0 0 
+BNZ | Branch if not equal zero  |1 1 0 1 
+
+
+
 
 
 Operação    | Significado
@@ -74,15 +77,3 @@ Entrada (inteiro)       | 0xf006 | 0xf000000c
 
 
 
-As operações são separadas
-em quatro classes distintas:
-1. Computação (AND, OR, XOR, SLT, SLTU, ADD, ADC, SUB, SBC, LDR, LDC)
-2. Deslocamento e rotação (LSR, ASR, ROR)
-3. Carga e armazenamento (LDB, STB, LDW, STW)
-4. Desvios condicionais (BEZ, BNZ)
-
-1. 1. Registradores
-Assim como outros processadores RISC, o processador Viking é definido como uma arquitetura
-baseada em operações de carga e armazenamento (load/store) para acesso à memória de dados.
-
-(GPRs) Registradores de Propósito Geral .
