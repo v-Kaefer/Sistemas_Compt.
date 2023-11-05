@@ -1,42 +1,15 @@
-##
-Problema 2: A função abaixo implementa o algoritmo Insertion Sort.
- Escreva um programa que implementa esse algoritmo e demonstre seu funcionamento
- com 3 vetores de tamanho diferente. Para cada um dos vetores,
- apresente no terminal seus elementos antes e depois da ordenação.
-
-insertion_sort(int * vec, int size) {
-    int i, j, aux; main
-    for (i = 1; i < size; i++) { loop_i
-        aux = vec[i]    ; aux = vetor [1(2)] => aux = 2
-        j = i           ; j = 1  
-        while ((j > 0) && (vec[j - 1] > aux)) { ; loop_j
-            vec[j] = vec[j - 1]; vetor [1(2)] = vetor[0(3)]
-            j--; j = 1 - 1
-            ;1° [3,2,1] -> [0,3,1] 
-            ; 
-        }
-        vec[j] = aux; [0,3,1] -> [2,3,1]
-    }
-}
-
-
-
-//r0 = temp(montador) {at} -> Não preservado
-//r5 = temp {sr} -> Não preservado
-//r6 = PC = add de retorno {lr} -> "Chamador"
-//r7 = Ponteiro de pilha {sp} -> Preservado
-
-
-//i e j = mantem igual e armazena na pilha como 1 variável
-
 main
     ; int i, j, aux
     ldi r0, vets    ; vetores
-    ldi r1, 1       ; i & j
+    ldi r1, 1       ; i & j = mantem igual e armazena na pilha como 1 variável
     ldi r3, 0       ; aux
+    bnz r7, insertion_sort
 
-begin
-    ldb r2, r0
+insertion_sort
+    bnz first_print, loop_print
+    ; insertion_sort(int * vec, int size)
+
+    ldb r2, r0          ; r2 = vets -> r2 = vet[r1]
     stw r2, printint
     
     ldi sr, r1
@@ -44,17 +17,42 @@ begin
     add r0, 1
     bnz sr, begin
 
+loop_print
+	ldw	r2,r0           ; r2 = r0 (vetor)
+	stw	r2,printint     ; printa vet[0]
+	ldi	r2,32           ; r2 = ""
+	stw	r2,printchar    ; printa ""
+	add	vet_control, 1            ; r4++
+	add	r0,2            ; r0 + 2 (pula byte)
+	sub	sr,vet_size,vet_control ; sr = vet_size - vet_control=0
+	bnz	sr,loop_print
+	ldi	r2,10           ; r2 = "\n"
+	stw	r2,printchar    ; print "\n"
+    ldi r2, r0          ; r2 = r0 (vetor)
+    sub first_print, 1
+	bnz	r7, insertion_sort
+
+
 
 loop_i
-    ldb r2, r0
-    ldb r3, r2          ; aux = vet[i]
+    ; for (i = 1; i < size; i++) {
+    
     ; Se i > vet_size, termina loop
 	slt sr, r1, vet_control; if (r1(i/j)<vet_control) {sr=1} else {sr=0}
-    bez sr, fim_i       ; sr = 0    
-    bnz sp, loop_j      ; sr = 1
+    bez sr, fim_i       ; if (sr = 0) -> fim_i
+
+    ldb r2, r0
+    ldb r3, r2          ; aux = vet[i]
+
+
+
+    bnz sp, loop_j      ; if (sr = 1) -> loop_j
+    
+    
 fim_i
 	; ?
     add r1, r1, 1       ; r1++
+    slt sp, vet_control, r1
     bnz sp, lr
 
 loop_j
@@ -105,21 +103,22 @@ vets
 
 set_vet3
     ldi r0, vet3
-    bnz sp, begin
+    bnz sp, lr
 set_vet2
     ldi r0, vet2
-    bnz sp, begin
+    bnz sp, lr
 set_vet1
     ldi r0, vet1
-    bnz sp, begin
+    bnz sp, lr
 end
     hcf
 
-
-vet_size 1
+first_print 4
+vet_size 5
+vet_control 0
 next_vet 0
 vet1 10 5 3 8 1
 vet2 9 6 5 1
 vet3 9 10 2
-vet_control 5
 printint 0xf002
+printchar 0xf000
