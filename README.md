@@ -64,3 +64,25 @@ Saída (caracter)        | 0xf000 | 0xf0000000
 Saída (inteiro)         | 0xf002 | 0xf0000004
 Entrada (caracter)      | 0xf004 | 0xf0000008
 Entrada (inteiro)       | 0xf006 | 0xf000000c
+
+
+
+
+
+
+
+
+
+
+As operações são separadas
+em quatro classes distintas:
+1. Computação (AND, OR, XOR, SLT, SLTU, ADD, ADC, SUB, SBC, LDR, LDC)
+2. Deslocamento e rotação (LSR, ASR, ROR)
+3. Carga e armazenamento (LDB, STB, LDW, STW)
+4. Desvios condicionais (BEZ, BNZ)
+
+1. 1. Registradores
+Assim como outros processadores RISC, o processador Viking é definido como uma arquitetura
+baseada em operações de carga e armazenamento (load/store) para acesso à memória de dados.
+
+(GPRs) Registradores de Propósito Geral .
