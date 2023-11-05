@@ -246,6 +246,127 @@ I<15:12> I<11> I<10:8> I<7:0>
 Opcode Imm Rst Immediate
 1 0 0 1 1 r r r i i i i i i i i
 
+## 1.4.2 Deslocamento e rotação
+- LSR - logical shift right
+Realiza a o deslocamento lógico por 1 bit à direita e armazena o resultado em um registrador.
+O valor de carry é modificado com o valor do bit perdido.
+- LSR Rst, RsA, r0
+GPR[Rst]   ’0’ & GPR[RsA]<15=31:1>
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+1 0 1 0 0 r r r r r r 0 0 0 0 0
+- ASR - arithmetic shift right
+Realiza a o deslocamento aritmético por 1 bit à direita e armazena o resultado em um registrador.
+O valor armazenado tem seu sinal mantido. O valor de carry é modificado com o valor do bit
+perdido.
+-  ASR Rst, RsA, r0
+GPR[Rst]   GPR[RsA]15=31 & GPR[RsA]<15=31:1>
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+1 0 1 0 0 r r r r r r 0 0 0 0 1
+11
+- ROR - rotate right through carry
+Realiza a rotação por 1 bit à direita e armazena o resultado em um registrador. O valor inserido
+no bit mais significativo é o valor de carry gerado na última instrução. O novo valor de carry é
+modificado com o valor do bit perdido.
+-  ROR Rst, RsA, r0
+GPR[Rst]   Carry & GPR[RsA]<15=31:1>
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+1 0 1 0 0 r r r r r r 0 0 0 1 0
+1.4.3 Carga e armazenamento
+- LDB - load byte
+Carrega um byte da memória. O endereço é obtido a partir do registrador base RsB. O valor é
+carregado na parte baixa do registrador destino Rst, e possui extensão de sinal.
+-  LDB Rst, r0, RsB
+GPR[Rst]   SEXT(MEM[GPR[RsB]]<7:0>)
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+0 0 0 0 0 r r r 0 0 0 r r r 1 0
+- STB - store byte
+Armazena um byte na memória. O endereço é obtido a partir do registrador base RsB. O valor
+armazenado encontra-se na parte baixa do registrador fonte RsA.
+-  STB r0, RsA, RsB
+MEM[GPR[RsB]]   GPR[RsA]<7:0>
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+0 0 0 1 0 0 0 0 r r r r r r 1 0
+- LDW - load word
+Carrega uma palavra da memória. O endereço é obtido a partir do registrador base RsB e deve
+estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor é carregado no registrador destino
+Rst.
+-  LDW Rst, r0, RsB
+GPR[Rst]   MEM[GPR[RsB]]
+12
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+0 1 0 0 0 r r r 0 0 0 r r r 1 0
+- STW - store word
+Armazena uma palavra na memória. O endereço é obtido a partir do registrador base RsB e
+deve estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor armazenado encontra-se no
+registrador fonte RsA.
+-  STW r0, RsA, RsB
+MEM[GPR[RsB]]   GPR[RsA]
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+0 1 0 1 0 0 0 0 r r r r r r 1 0
+1.4.4 Desvios condicionais
+- BEZ - branch if equal zero
+Realiza um desvio condicional, caso o valor de Fonte 1 seja zero. O endereço é obtido a partir
+do registrador base RsB ou relativo ao PC e deve estar alinhado ao tamanho de uma instrução
+(16 bits).
+-  BEZ r0, RsA, RsB
+if (GPR[RsA] == zero) PC   GPR[RsB]
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+1 1 0 0 0 0 0 0 r r r r r r 1 1
+-  BEZ Rst, Immediate
+if (GPR[Rst] == zero) PC   PC + SEXT(Immediate)
+I<15:12> I<11> I<10:8> I<7:0>
+Opcode Imm Rst Immediate
+1 1 0 0 1 r r r i i i i i i i i
+- BNZ - branch if not equal zero
+Realiza um desvio condicional, caso o valor de Fonte 1 não seja zero. O endereço é obtido a partir
+do registrador base RsB ou relativo ao PC e deve estar alinhado ao tamanho de uma instrução
+(16 bits).
+-  BNZ r0, RsA, RsB
+if (GPR[RsA] != zero) PC   GPR[RsB]
+13
+I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
+Opcode Imm Rst RsA RsB Op2
+1 1 0 1 0 0 0 0 r r r r r r 1 1
+I<15:12> I<11> I<10:8> I<7:0>
+Opcode Imm Rst Immediate
+1 1 0 1 1 r r r i i i i i i i i
+-  BNZ Rst, Immediate
+if (GPR[Rst] != zero) PC   PC + SEXT(Immediate)
+A tabela a seguir apresenta um resumo das operações definidas na arquitetura. Importante
+observar que diversos opcodes não foram definidos, o que permite adição de novas instruções ao
+conjunto básico. Além disso, alguns opcodes são reaproveitados para instruções semelhantes,
+como instruções que fazem ou não o uso do qualificador carry.
+
+Instrução | Descrição           | Opcode
+AND | Logical product           | 0 0 0 0
+OR  | Logical sum               | 0 0 0 1 
+XOR | Logical diff              | 0 0 1 0 
+SLT | Set if less than          | 0 0 1 1 
+SLTU| SLT (unsigned)            | 0 1 0 0 
+ADD | Add                       | 0 1 0 1 
+ADC | Add with carry            | 0 1 0 1 
+SUB | Subtract                  | 0 1 1 0 
+SBC | SUB with carry            | 0 1 1 0 
+LDR | Load register             | 1 0 0 0 
+LDC | Load constant             | 1 0 0 1 
+LSR | Logical shift right       | 1 0 1 0 
+ASR | Arithmetic shift right    | 1 0 1 0 
+ROR | Rotate right through carry| 1 0 1 0 
+LDB | Load byte                 | 0 0 0 0 
+STB | Store byte                | 0 0 0 1 
+LDW | Load word                 | 0 1 0 0 
+STW | Store word                | 0 1 0 1 
+BEZ | Branch if equal zero      | 1 1 0 0 
+BNZ | Branch if not equal zero  | 1 1 0 1 
+
 
 
 
