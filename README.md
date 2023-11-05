@@ -49,14 +49,7 @@ BNZ | Branch if not equal zero  |1 1 0 1
 
 
 
-Operação    | Significado
-add r5,10   | r5 = r5 + 10
-or r2,1     | r2 = r2 or 1
-xor r5,-1   | r5 = r5 xor -1 = not r5
-ldr r3,5    | r3 = 5
-ldc r3,10   | r3 = (r3 << 8) or 10
-slt r4,10   | if (r4 < 10) r4 = 1, else r4 = 0
-bez r4,28   | if (r4 == zero) PC = PC + 28
+
 
 
 
