@@ -23,27 +23,7 @@ insertion_sort(int * vec, int size) {
 
 
 
-Instrução | Descrição           | Opcode
-AND | Logical product           | 0 0 0 0
-OR  | Logical sum               | 0 0 0 1 
-XOR | Logical diff              | 0 0 1 0 
-SLT | Set if less than          | 0 0 1 1 
-SLTU| SLT (unsigned)            | 0 1 0 0 
-ADD | Add                       | 0 1 0 1 
-ADC | Add with carry            | 0 1 0 1 
-SUB | Subtract                  | 0 1 1 0 
-SBC | SUB with carry            | 0 1 1 0 
-LDR | Load register             | 1 0 0 0 
-LDC | Load constant             | 1 0 0 1 
-LSR | Logical shift right       | 1 0 1 0 
-ASR | Arithmetic shift right    | 1 0 1 0 
-ROR | Rotate right through carry| 1 0 1 0 
-LDB | Load byte                 | 0 0 0 0 
-STB | Store byte                | 0 0 0 1 
-LDW | Load word                 | 0 1 0 0 
-STW | Store word                | 0 1 0 1 
-BEZ | Branch if equal zero      | 1 1 0 0 
-BNZ | Branch if not equal zero  |1 1 0 1 
+
 
 
 
