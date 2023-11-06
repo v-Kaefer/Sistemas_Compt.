@@ -274,7 +274,8 @@ GPR[Rst]   Carry & GPR[RsA]<15=31:1>
 I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
 Opcode Imm Rst RsA RsB Op2
 1 0 1 0 0 r r r r r r 0 0 0 1 0
-1.4.3 Carga e armazenamento
+
+## 1.4.3 Carga e armazenamento
 - LDB - load byte
 Carrega um byte da memória. O endereço é obtido a partir do registrador base RsB. O valor é
 carregado na parte baixa do registrador destino Rst, e possui extensão de sinal.
@@ -310,7 +311,8 @@ MEM[GPR[RsB]]   GPR[RsA]
 I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
 Opcode Imm Rst RsA RsB Op2
 0 1 0 1 0 0 0 0 r r r r r r 1 0
-1.4.4 Desvios condicionais
+
+## 1.4.4 Desvios condicionais
 - BEZ - branch if equal zero
 Realiza um desvio condicional, caso o valor de Fonte 1 seja zero. O endereço é obtido a partir
 do registrador base RsB ou relativo ao PC e deve estar alinhado ao tamanho de uma instrução
@@ -345,7 +347,7 @@ observar que diversos opcodes não foram definidos, o que permite adição de no
 conjunto básico. Além disso, alguns opcodes são reaproveitados para instruções semelhantes,
 como instruções que fazem ou não o uso do qualificador carry.
 
-Instrução | Descrição           | Opcode
+## Instrução | Descrição        | Opcode
 AND | Logical product           | 0 0 0 0
 OR  | Logical sum               | 0 0 0 1 
 XOR | Logical diff              | 0 0 1 0 
