@@ -273,13 +273,11 @@ Opcode Imm Rst RsA RsB Op2
 
 ## 1.4.3 Carga e armazenamento
 ### LDB - load byte
-**Carrega um byte da memória.** O endereço é obtido a partir do registrador base RsB. O valor é
-carregado na parte baixa do registrador destino Rst, e possui extensão de sinal.
+**Carrega um byte da memória.** O endereço é obtido a partir do registrador base RsB. O valor é carregado na parte baixa do registrador destino Rst, e possui extensão de sinal.
 -  LDB Rst, r0, RsB
 
 ### STB - store byte
-**Armazena um byte na memória.** O endereço é obtido a partir do registrador base RsB. O valor
-armazenado encontra-se na parte baixa do registrador fonte RsA.
+**Armazena um byte na memória.** O endereço é obtido a partir do registrador base RsB. O valor armazenado encontra-se na parte baixa do registrador fonte RsA.
 -  STB r0, RsA, RsB
 
 ### LDW - load word
@@ -288,9 +286,7 @@ O valor é carregado no registrador destino Rst.
 -  LDW Rst, r0, RsB
 
 ### STW - store word
-**Armazena uma palavra na memória.** O endereço é obtido a partir do registrador base RsB e
-deve estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor armazenado encontra-se no
-registrador fonte RsA.
+**Armazena uma palavra na memória.** O endereço é obtido a partir do registrador base RsB e deve estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor armazenado encontra-se no registrador fonte RsA.
 -  STW r0, RsA, RsB
 
 ## 1.4.4 Desvios condicionais
