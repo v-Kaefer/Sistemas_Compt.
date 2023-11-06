@@ -277,31 +277,20 @@ Opcode Imm Rst RsA RsB Op2
 
 ## 1.4.3 Carga e armazenamento
 - LDB - load byte
-Carrega um byte da memória. O endereço é obtido a partir do registrador base RsB. O valor é
+**Carrega um byte da memória. O endereço é obtido a partir do registrador base RsB**. O valor é
 carregado na parte baixa do registrador destino Rst, e possui extensão de sinal.
 -  LDB Rst, r0, RsB
-GPR[Rst]   SEXT(MEM[GPR[RsB]]<7:0>)
-I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
-Opcode Imm Rst RsA RsB Op2
-0 0 0 0 0 r r r 0 0 0 r r r 1 0
+
 - STB - store byte
-Armazena um byte na memória. O endereço é obtido a partir do registrador base RsB. O valor
+**Armazena um byte na memória. O endereço é obtido a partir do registrador base RsB.** O valor
 armazenado encontra-se na parte baixa do registrador fonte RsA.
 -  STB r0, RsA, RsB
-MEM[GPR[RsB]]   GPR[RsA]<7:0>
-I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
-Opcode Imm Rst RsA RsB Op2
-0 0 0 1 0 0 0 0 r r r r r r 1 0
+
 - LDW - load word
-Carrega uma palavra da memória. O endereço é obtido a partir do registrador base RsB e deve
-estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor é carregado no registrador destino
-Rst.
+**Carrega uma palavra da memória. O endereço é obtido a partir do registrador base RsB e deve estar alinhado ao tamanho da palavra (16 ou 32 bits).**
+O valor é carregado no registrador destino Rst.
 -  LDW Rst, r0, RsB
-GPR[Rst]   MEM[GPR[RsB]]
-12
-I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
-Opcode Imm Rst RsA RsB Op2
-0 1 0 0 0 r r r 0 0 0 r r r 1 0
+
 - STW - store word
 Armazena uma palavra na memória. O endereço é obtido a partir do registrador base RsB e
 deve estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor armazenado encontra-se no
