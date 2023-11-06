@@ -22,7 +22,7 @@ Reg | Nome | Apelido| Papel
 7   | r7   | sp     | Especial  [Ponteiro de Pilha = sp] => Preservado
 
 
-O temporário é usado por pseudo operações (apresentadas na Seção 2) e o ponteiro de pilha para armazenamento de dados e chamadas de função.
+* O temporário é usado por pseudo operações (apresentadas na Seção 2) e o ponteiro de pilha para armazenamento de dados e chamadas de função. 
 Outro papel desse registrador é a implementação de desvios incondicionais, uma vez que é seguro assumir que seu valor nunca será zero durante a execução normal de um programa.
 
 
@@ -30,13 +30,13 @@ Outro papel desse registrador é a implementação de desvios incondicionais, um
 Existem apenas dois formatos de instrução definidos na arquitetura Viking (tipos R e I). Em instruções do tipo R, um registrador é definido como destino (Rst) e dois registradores são definidos como fontes (RsA e RsB).
 Em instruções do tipo I, um registrador é definido como fonte e destino da operação (Rst), e o segundo valor usado como fonte é obtido a partir do campo Immediate codificado diretamente na instrução. Os índices utilizados para indexar o banco de registradores são codificados na instrução em 3 bits cada, o suficiente para referenciar 8 registradores por operando ou destino para escrita do resultado.
 
-# 1.2.1 Instruções tipo R
+## 1.2.1 Instruções tipo R
 Em instruções do tipo R os campos Opcode (4 bits) e Op2 (2 bits) definem a operação específica.
 Nesse tipo de instrução três registradores são referenciados, e o papel desses registradores depende 4 da classe à qual a instrução está associada. As instruções do tipo R possuem o campo Imm com o valor fixo em 0.
 
-I<15:12> I<11> I<10:8> I<7:5> I<4:2> I<1:0>
-Opcode Imm Rst RsA RsB Op2
-x x x x 0 r r r r r r r r r x x
+I<15:12> | I<11> | I<10:8> | I<7:5> | I<4:2> | I<1:0>
+ Opcode  |  Imm  |   Rst   |   RsA  |   RsB  | Op2
+x x x x | 0 r r r r r r r r r x x
 
 A função dos campos adicionais em instruções do tipo R é definida como:
  Rst - registrador destino (alvo) da operação;
@@ -44,11 +44,11 @@ A função dos campos adicionais em instruções do tipo R é definida como:
  RsB - registrador Fonte 2 (Operando B ou base);
 - Operando B em operações da classe computação
 - Endereço base para instruções de carga e armazenamento e desvios;
-Para instruções de deslocamento, o registrador Fonte 2 deve ser sempre r0. O motivo para isso é que não é necessário codificar a quantidade a ser deslocada, uma vez que a arquitetura pode deslocar apenas 1 bit por instrução. Em instruções de carga, o registrador Fonte 1 deve ser
-sempre r0 e em instruções de armazenamento e desvios condicionais, o registrador alvo é sempre r0. Abaixo são apresentados alguns exemplos de instruções do tipo R, utilizando a sintaxe da linguagem de montagem apresentada no Capítulo 4. Importante observar que em instruções de
+* Para instruções de deslocamento, o registrador Fonte 2 deve ser sempre r0. O motivo para isso é que não é necessário codificar a quantidade a ser deslocada, uma vez que a arquitetura pode deslocar apenas 1 bit por instrução. Em instruções de carga, o registrador Fonte 1 deve ser sempre r0 e em instruções de armazenamento e desvios condicionais, o registrador alvo é sempre r0.
+* Abaixo são apresentados alguns exemplos de instruções do tipo R, utilizando a sintaxe da linguagem de montagem apresentada no Capítulo 4. Importante observar que em instruções de
 armazenamento e desvios condicionais Rst deve ser r0, em instruções de carga RsA deve ser r0 e em deslocamentos RsB deve ser r0 3.
 
-Operação     | Significado
+# Operação   | Significado
 add r3,r1,r2 | r3 = r1 + r2
 ldb r3,r0,r2 | r3 = MEM[r2]
 stw r0,r1,r2 | MEM[r2] = r1
