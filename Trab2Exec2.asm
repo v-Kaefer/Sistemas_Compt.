@@ -1,30 +1,24 @@
 main
     ; int i, j, aux
     ldi r0, select_vet    ; vetores
-    ldi r1, 1       ; i & j = mantem igual e armazena na pilha como 1 variável
+    ldi r1, 0       ; i & j = mantem igual e armazena na pilha como 1 variável
     ldi r3, 0       ; aux {vetx[i]}
     bnz r7, insertion_sort
 
 insertion_sort
-    bnz first_print, loop_print
     ; insertion_sort(int * vec, int size)
-    
+
 
 
     ; for
-    ldi r3, r0        ; r2 = vetx[0]
-    add r3, r3, r1    ; r3 = vetx[r1] | aux = vet[i]
+    ldi r2, r0        ; r2 = vetx[0]
+    add r2, r2, r1    ; r2 = vetx[r1(i)]
+    ldi r3, r2        ; aux = vet[r1(i)]
 
-    ; j = i
-
+    ; r1 = j = i
+    bnz sp, loop_j
     ; while ((j > 0) && (vec[j - 1] > aux)) { loop_j
     
-
-
-    ldi sr, r1
-    slt sr, vet_control
-    add r0, 1
-    bnz sr, begin
 
 loop_print
 	ldw	r2,r0           ; r2 = r0 (vetor)
@@ -50,19 +44,14 @@ loop_i
 	slt sr, r1, vet_control; if (r1(i/j)<vet_control) {sr=1} else {sr=0}
     bez sr, fim_i       ; if (sr = 0) -> fim_i
 
-    ldb r2, r0
-    ldb r3, r2          ; aux = vet[i]
-
-
-
     bnz sp, loop_j      ; if (sr = 1) -> loop_j
     
     
 fim_i
-	; ?
     add r1, r1, 1       ; r1++
     slt sp, vet_control, r1
-    bnz sp, lr
+    bez sp, insertion_sort
+    bnz sp, loop_i
 
 loop_j
     ; while ((j > 0) && (vet[j - 1] > aux)) {
@@ -70,50 +59,30 @@ loop_j
     slt sr, r1, 0       ; if (r1(j) < 0) {sr=1} else {sr=0}
     bnz sr, fim_j       ; if (sr(j) < 0) {loopend}
 
-    ; ajuste p/ teste (vet[j - 1] > aux)
+    ; (vet[j - 1] > aux)
 
-    ldi sr, r3          ; sr = vetx[j]
-    sub sr, sr, 1       ; sr[j] = vetx[j - 1]
-
+    ldi r4, r2          ; r4 = vetx[r1(j)]
+    ldi sr, r4
     sub sp, 2           ; Pilha(Push)
-    stw sr, sp          ; Push(vetx[j-1])
+    stw r4, sp          ; Push(vetx[r1(j)])
+    ldi r4, sr
+    sub r4, r4, 1       ; r4[j] = vetx[j - 1]    
 
-    slt sr, aux, r3     ; if (aux < r3) {sr = 1} else {sr = 0}
+    slt sr, r4, r3      ; if (r4(vetx[j - 1 ] < aux )) {sr = 1} else {start_loop_j}
     bnz sr, endloop_j   ; if (sr!=0) {endloop_j}
+
+    ; start_loop_j
     
-    ldi r3, 
-
-
-
-
-
-    ldb r4, r0          ; r4 = vet[r1(j)]
-    add r0, sr          ; r0 + (j-1)
-    
-    ldb r4, r0          ; r4 {vet[0]} = r4 {vet[j-1]}
-
-    ; Pilha (j-1)
-    sub sp, 2
-    stb sr, sp
-
-    ; teste (vec[j - 1] > aux)
-    slt sr, r4, r3      ; if (r4 < r3) {sr = 1} else {sr = 0}
-    bnz sr, endloop_j   ; endloop_j
-
-    ; Passou nos testes
-
-    ldi r0, r1          ; r0 = r1(j)
-    ldb r4, r0          ; r4 = vet[j]
-    ldi sp, sr          ; PILHA[pop] carrega vet[j-1]
-    add sp, 2
-    stb r4, sr          ; r4 vet[j] = sr vet[j-1]
-    sub sr, r1, 1       ; j--
+    ldi r5, r2          ; r5 = vetx[r1(j)]
+    add r5, r5, r4      ; r5 = vetx[vetx[j-1]] / posição
+    stw r5, r4          ; vetx[j] = vetx[j-1]
+    sub r1, r1, 1       ; j-- {Retorna 1 posição no índice}
     bnz sp, endloop_j
 
 endloop_j
-    ldi r0, sr          ; índice = j
-    ldb r2, r0          ; vet[j]
-    stb r2, r3          ; vet[j] = aux
+
+    ldi r5, r2          ; r5 = vetx[r1]
+    stw r5, r3          ; vetx[r1(j)] = aux
     bnz sp, loop_i
 
 select_vet
