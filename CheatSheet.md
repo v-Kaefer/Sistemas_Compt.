@@ -6,8 +6,7 @@ As operações são separadas em quatro classes distintas:
 4. Desvios condicionais (BEZ, BNZ)
 
 ## 1. 1. Registradores
-Assim como outros processadores RISC, o processador Viking é definido como uma arquitetura
-baseada em operações de carga e armazenamento (load/store) para acesso à memória de dados.
+Assim como outros processadores RISC, o processador Viking é definido como uma arquitetura baseada em operações de carga e armazenamento (load/store) para acesso à memória de dados.
 
 # (GPRs) Registradores de Propósito Geral .
 
@@ -93,10 +92,7 @@ Apenas três modos de endereçamento são utilizados na arquitetura, sendo esses
 1. Registrador
 2. Imediato
 3. Relativo ao PC
-O primeiro modo (registrador) é utilizado por instruções do tipo R apenas. Instruções que
-fazem uso desse modo pertencem às classes computação, deslocamento, carga e armazenamento
-e desvios condicionais. O segundo modo (imediato) é utilizado por instruções do tipo I apenas,
-classe computação. O último modo (relativo ao PC) é utilizado por instruções do tipo I, classe desvios condicionais.
+O primeiro modo (registrador) é utilizado por instruções do tipo R apenas. Instruções que fazem uso desse modo pertencem às classes computação, deslocamento, carga e armazenamento e desvios condicionais. O segundo modo (imediato) é utilizado por instruções do tipo I apenas, classe computação. O último modo (relativo ao PC) é utilizado por instruções do tipo I, classe desvios condicionais.
 
 
 ## 1.4.1 Computação
@@ -318,7 +314,7 @@ if (GPR[Rst] != zero) PC   PC + SEXT(Immediate)
 
 A tabela a seguir apresenta um resumo das operações definidas na arquitetura. Importante observar que diversos opcodes não foram definidos, o que permite adição de novas instruções ao conjunto básico. Além disso, alguns opcodes são reaproveitados para instruções semelhantes, como instruções que fazem ou não o uso do qualificador carry.
 
-## Instrução | Descrição        | Opcode
+# Instrução | Descrição        | Opcode
 AND | Logical product           | 0 0 0 0
 OR  | Logical sum               | 0 0 0 1 
 XOR | Logical diff              | 0 0 1 0 
