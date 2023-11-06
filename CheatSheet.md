@@ -277,29 +277,29 @@ Opcode Imm Rst RsA RsB Op2
 
 ## 1.4.3 Carga e armazenamento
 ### LDB - load byte
-**Carrega um byte da memória. O endereço é obtido a partir do registrador base RsB**. O valor é
+**Carrega um byte da memória.** O endereço é obtido a partir do registrador base RsB. O valor é
 carregado na parte baixa do registrador destino Rst, e possui extensão de sinal.
 -  LDB Rst, r0, RsB
 
 ### STB - store byte
-**Armazena um byte na memória. O endereço é obtido a partir do registrador base RsB.** O valor
+**Armazena um byte na memória.** O endereço é obtido a partir do registrador base RsB. O valor
 armazenado encontra-se na parte baixa do registrador fonte RsA.
 -  STB r0, RsA, RsB
 
 ### LDW - load word
-**Carrega uma palavra da memória. O endereço é obtido a partir do registrador base RsB e deve estar alinhado ao tamanho da palavra (16 ou 32 bits).**
+**Carrega uma palavra da memória.** O endereço é obtido a partir do registrador base RsB e deve estar alinhado ao tamanho da palavra (16 ou 32 bits).
 O valor é carregado no registrador destino Rst.
 -  LDW Rst, r0, RsB
 
 ### STW - store word
-Armazena uma palavra na memória. O endereço é obtido a partir do registrador base RsB e
+**Armazena uma palavra na memória.** O endereço é obtido a partir do registrador base RsB e
 deve estar alinhado ao tamanho da palavra (16 ou 32 bits). O valor armazenado encontra-se no
 registrador fonte RsA.
-###  STW r0, RsA, RsB
+-  STW r0, RsA, RsB
 
 ## 1.4.4 Desvios condicionais
 ### BEZ - branch if equal zero
-Realiza um desvio condicional, caso o valor de Fonte 1 seja zero. O endereço é obtido a partir
+**Realiza um desvio condicional, caso o valor de Fonte 1 seja zero.** O endereço é obtido a partir
 do registrador base RsB ou relativo ao PC e deve estar alinhado ao tamanho de uma instrução
 (16 bits).
 -  BEZ r0, RsA, RsB
@@ -315,6 +315,7 @@ if (GPR[RsA] != zero) PC   GPR[RsB]
 
 ###  BNZ Rst, Immediate
 if (GPR[Rst] != zero) PC   PC + SEXT(Immediate)
+
 A tabela a seguir apresenta um resumo das operações definidas na arquitetura. Importante observar que diversos opcodes não foram definidos, o que permite adição de novas instruções ao conjunto básico. Além disso, alguns opcodes são reaproveitados para instruções semelhantes, como instruções que fazem ou não o uso do qualificador carry.
 
 ## Instrução | Descrição        | Opcode
