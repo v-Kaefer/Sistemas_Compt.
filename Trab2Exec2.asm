@@ -1,17 +1,26 @@
 main
     ; int i, j, aux
-    ldi r0, vets    ; vetores
+    ldi r0, select_vet    ; vetores
     ldi r1, 1       ; i & j = mantem igual e armazena na pilha como 1 variável
-    ldi r3, 0       ; aux
+    ldi r3, 0       ; aux {vetx[i]}
     bnz r7, insertion_sort
 
 insertion_sort
     bnz first_print, loop_print
     ; insertion_sort(int * vec, int size)
-
-    ldb r2, r0          ; r2 = vets -> r2 = vet[r1]
-    stw r2, printint
     
+
+
+    ; for
+    ldi r3, r0        ; r2 = vetx[0]
+    add r3, r3, r1    ; r3 = vetx[r1] | aux = vet[i]
+
+    ; j = i
+
+    ; while ((j > 0) && (vec[j - 1] > aux)) { loop_j
+    
+
+
     ldi sr, r1
     slt sr, vet_control
     add r0, 1
@@ -59,13 +68,28 @@ loop_j
     ; while ((j > 0) && (vet[j - 1] > aux)) {
     ; (j > 0) 
     slt sr, r1, 0       ; if (r1(j) < 0) {sr=1} else {sr=0}
-    bez sr, fim_j       ; if (sr(j) < 0) {loopend}
+    bnz sr, fim_j       ; if (sr(j) < 0) {loopend}
 
     ; ajuste p/ teste (vet[j - 1] > aux)
-    ldi sr, r1          ; sr = r1 (j)
-    sub sr, sr, 1       ; sr(j) = [j - 1]
+
+    ldi sr, r3          ; sr = vetx[j]
+    sub sr, sr, 1       ; sr[j] = vetx[j - 1]
+
+    sub sp, 2           ; Pilha(Push)
+    stw sr, sp          ; Push(vetx[j-1])
+
+    slt sr, aux, r3     ; if (aux < r3) {sr = 1} else {sr = 0}
+    bnz sr, endloop_j   ; if (sr!=0) {endloop_j}
+    
+    ldi r3, 
+
+
+
+
+
     ldb r4, r0          ; r4 = vet[r1(j)]
     add r0, sr          ; r0 + (j-1)
+    
     ldb r4, r0          ; r4 {vet[0]} = r4 {vet[j-1]}
 
     ; Pilha (j-1)
@@ -92,7 +116,7 @@ endloop_j
     stb r2, r3          ; vet[j] = aux
     bnz sp, loop_i
 
-vets
+select_vet
     add next_vet, 1
     slt sr, next_vet, 3
     bnz sr, set_vet3
@@ -103,16 +127,19 @@ vets
 
 set_vet3
     ldi r0, vet3
-    bnz sp, lr
 set_vet2
     ldi r0, vet2
-    bnz sp, lr
 set_vet1
     ldi r0, vet1
-    bnz sp, lr
 end
     hcf
 
+
+
+
+i 0
+j 0
+aux 0
 first_print 4
 vet_size 5
 vet_control 0
